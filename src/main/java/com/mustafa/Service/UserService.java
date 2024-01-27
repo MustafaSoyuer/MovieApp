@@ -9,6 +9,7 @@ import com.mustafa.mapper.UserMapper;
 import com.mustafa.repository.UserRepository;
 import com.mustafa.utility.ICrudService;
 import com.mustafa.utility.enums.EStatus;
+import com.mustafa.utility.enums.EUserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -171,6 +172,24 @@ public class UserService implements ICrudService<User,Long> {
         return UserMapper.INSTANCE.fromUserToRegisterResponceDto(user);
     }
 
+    //2.commit
+    public RegisterResponceDto registerMapperNotDuplicateEmail(RegisterRequestDto dto) {
+        User user = UserMapper.INSTANCE.fromRegisterRequestDtoToUser(dto);
+        if(!user.getPassword().equals(user.getRePassword()) || user.getPassword().isBlank()) {
+            throw new RuntimeException("Şifreler aynı değildir");
+        }
+        Optional<User> user1 =userRepository.findByEmail(dto.getEmail());
+        if(user1.isPresent()){
+            throw new RuntimeException("Kayıtlı email ile ikinci kez kayıt yapılamaz. Başak bir email deneyiniz.");
+        }
+        if(dto.getEmail().equals(("ba.admin@email.com"))){
+            user.setStatus(EStatus.ACTIVE);
+            user.setUserType(EUserType.ADMIN);
+        }
+            userRepository.save(user);
+        return UserMapper.INSTANCE.fromUserToRegisterResponceDto(user);
+    }
+
     public List<User> findAllByOrderByName(){
         return userRepository.findAllByOrderByName();
     }
@@ -187,5 +206,5 @@ public class UserService implements ICrudService<User,Long> {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-    
+
 }

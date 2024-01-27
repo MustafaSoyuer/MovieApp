@@ -106,4 +106,9 @@ public class UserController {
         return ResponseEntity.ok(userService.findByEmail(email));
     }
 
+    @PostMapping("/register-mapper-not-duplicate-email")
+    public ResponseEntity<RegisterResponceDto> registerMapperNotDuplicateEmail(@RequestBody RegisterRequestDto dto){
+        return ResponseEntity.ok(userService.registerMapperNotDuplicateEmail(dto));
+    }
+
 }
