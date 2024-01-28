@@ -23,9 +23,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
 //     Kullanıcının girdiği email'e göre veritabanında sorgu yapan bir metot yazınız.
     Optional<User> findByEmail(String email);
 
-
-    @Query(value = "SELECT * FROM User WHERE LENGTH(password) >  length", nativeQuery = true)
-    List<User> findUsersWithLongPasswordNative(@Param("length") int length);
+// burada maxLength den önce boşluk bıraktığım için hata veriyordu hocam.bir tane boşluk :)
+    @Query(value = "select * from tbl_user as u where length(u.password) > :maxLength", nativeQuery = true)
+    List<User> findUsersWithLongPasswordNative(@Param("maxLength") Integer length);
 
 
     @Query("SELECT u FROM User u WHERE LENGTH(u.password) > ?1")

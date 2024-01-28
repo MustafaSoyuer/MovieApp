@@ -113,7 +113,7 @@ public class UserController {
     }
 
     @GetMapping("/find-user-with-long-password-native")
-    public ResponseEntity<List<User>> findUsersWithLongPasswordNative(@RequestParam int length){
+    public ResponseEntity<List<User>> findUsersWithLongPasswordNative(Integer length){
         return ResponseEntity.ok(userService.findUsersWithLongPasswordNative(length));
     }
 

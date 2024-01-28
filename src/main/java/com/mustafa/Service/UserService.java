@@ -209,7 +209,7 @@ public class UserService implements ICrudService<User,Long> {
     }
 
     //3.commit
-    public List<User> findUsersWithLongPasswordNative(int length) {
+    public List<User> findUsersWithLongPasswordNative(Integer length) {
         return userRepository.findUsersWithLongPasswordNative(length);
     }
 
