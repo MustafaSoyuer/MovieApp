@@ -30,9 +30,11 @@ public class User {
     private String email;
     @Column(length = 15)
     private String phone;
-    @Size(max = 32)
+//    @Size(max = 32)
+    @Column(length = 32)
     private String password;
-    @Size(max = 32)
+//    @Size(max = 32)
+    @Column(length = 32)
     private String rePassword;
 
     @ElementCollection
@@ -51,6 +53,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EStatus status=EStatus.PENDING;
+
+
 
 
 }

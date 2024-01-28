@@ -8,6 +8,7 @@ import com.mustafa.dto.response.RegisterResponceDto;
 import com.mustafa.entity.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -110,5 +111,25 @@ public class UserController {
     public ResponseEntity<RegisterResponceDto> registerMapperNotDuplicateEmail(@RequestBody RegisterRequestDto dto){
         return ResponseEntity.ok(userService.registerMapperNotDuplicateEmail(dto));
     }
+
+    @GetMapping("/find-user-with-long-password-native")
+    public ResponseEntity<List<User>> findUsersWithLongPasswordNative(@RequestParam int length){
+        return ResponseEntity.ok(userService.findUsersWithLongPasswordNative(length));
+    }
+
+
+
+    @GetMapping("/find-user-with-long-password-jpql")
+    public ResponseEntity<List<User>> findUsersWithLongPasswordJPQL(int passwordLength){
+        return ResponseEntity.ok(userService.findUsersWithLongPasswordJPQL(passwordLength));
+    }
+
+
+    @GetMapping("/find-all-by-email-ends-with-ignore-case")
+    public  ResponseEntity<List<User>> findAllByEmailEndsWithIgnoreCase(String name){
+        return ResponseEntity.ok(userService.findAllByEmailEndsWithIgnoreCase(name));
+    }
+
+
 
 }

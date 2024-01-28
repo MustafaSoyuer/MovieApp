@@ -11,6 +11,7 @@ import com.mustafa.utility.ICrudService;
 import com.mustafa.utility.enums.EStatus;
 import com.mustafa.utility.enums.EUserType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -180,7 +181,7 @@ public class UserService implements ICrudService<User,Long> {
         }
         Optional<User> user1 =userRepository.findByEmail(dto.getEmail());
         if(user1.isPresent()){
-            throw new RuntimeException("Kayıtlı email ile ikinci kez kayıt yapılamaz. Başak bir email deneyiniz.");
+            throw new RuntimeException("Kayıtlı email ile ikinci kez kayıt yapılamaz. Başka bir email deneyiniz.");
         }
         if(dto.getEmail().equals(("ba.admin@email.com"))){
             user.setStatus(EStatus.ACTIVE);
@@ -206,5 +207,19 @@ public class UserService implements ICrudService<User,Long> {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    //3.commit
+    public List<User> findUsersWithLongPasswordNative(int length) {
+        return userRepository.findUsersWithLongPasswordNative(length);
+    }
+
+    public List<User> findUsersWithLongPasswordJPQL(int passwordLength) {
+        return userRepository.findUsersWithLongPasswordJPQL(passwordLength);
+    }
+
+    public List<User> findAllByEmailEndsWithIgnoreCase(String name) {
+        return userRepository.findAllByEmailEndsWithIgnoreCase(name);
+    }
+
 
 }
